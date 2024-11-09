@@ -10,12 +10,12 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Theme.of(context).colorScheme.onPrimary),
       child: Slidable(
-        startActionPane: ActionPane(motion: DrawerMotion(), children: [
+        startActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             // An action can be bigger than the others.
             flex: 2,
@@ -27,7 +27,7 @@ class TaskItem extends StatelessWidget {
             icon: Icons.delete,
             label: 'Delete',
             autoClose: true,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(15), topLeft: Radius.circular(15)),
           ),
           SlidableAction(
@@ -73,7 +73,7 @@ class TaskItem extends StatelessWidget {
 
         child: Container(
           // margin: EdgeInsets.all(8),
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.onPrimary,
             borderRadius: BorderRadius.circular(15),
@@ -87,18 +87,18 @@ class TaskItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: Theme.of(context).primaryColor),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 7,
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Task title', style: AppLightStyles.tasksTitle),
-                  SizedBox(
+                  Text('Play basket ball', style: AppLightStyles.tasksTitle),
+                  const SizedBox(
                     height: 4,
                   ),
-                  Text('Task description', style: AppLightStyles.taskDesc),
-                  SizedBox(
+                  Text('Play basket ball', style: AppLightStyles.taskDesc),
+                  const SizedBox(
                     height: 4,
                   ),
                   Text(
@@ -107,14 +107,15 @@ class TaskItem extends StatelessWidget {
                   )
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.check,
                     color: Colors.white,
                     size: 30,

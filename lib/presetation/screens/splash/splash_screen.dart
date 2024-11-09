@@ -49,7 +49,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 189,
                   height: 211,
                 )),
-            Expanded(flex: 1, child: Image.asset(AssetsManager.routeLogo)),
+            Expanded(
+              flex: 1,
+              child: Image.asset(
+                AssetsManager.routeLogo,
+              ),
+            ),
           ],
         ));
   }

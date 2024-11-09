@@ -8,7 +8,17 @@ class TaskBottomSheet extends StatefulWidget {
   @override
   State<TaskBottomSheet> createState() => _TaskBottomSheetState();
 
-  static Widget show() => TaskBottomSheet();
+  // static Widget show() => TaskBottomSheet();
+  static void show(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: TaskBottomSheet(),
+      ),
+    );
+  }
 }
 
 class _TaskBottomSheetState extends State<TaskBottomSheet> {
@@ -17,7 +27,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(15),
+      height: MediaQuery.of(context).size.height * 0.5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -26,44 +37,36 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
             textAlign: TextAlign.center,
             style: AppLightStyles.bottomSheetTitle,
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           TextFormField(
             decoration: InputDecoration(
               hintText: 'Enter your task title',
               hintStyle: AppLightStyles.hintStyle,
             ),
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           TextFormField(
             decoration: InputDecoration(
                 hintText: 'Enter your task description',
                 hintStyle: AppLightStyles.hintStyle),
           ),
-          const SizedBox(
-            height: 12,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Text(
             'Select date',
             style: AppLightStyles.dateLabel,
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           InkWell(
               onTap: () {
                 showTaskDatePicker();
               },
               child: Text(
-                selectedDate.toFormattedDate,
+                selectedDate.myDateformat(), //  selectedDate.toFormattedDate,
                 textAlign: TextAlign.center,
                 style: AppLightStyles.dateStyle,
               )),
           const Spacer(),
-          ElevatedButton(onPressed: () {}, child: Text('Add task'))
+          ElevatedButton(onPressed: () {}, child: const Text('Add task'))
         ],
       ),
     );
@@ -73,9 +76,9 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
     selectedDate = await showDatePicker(
           //selectableDayPredicate: (date) => date. != 20 && date.day != 21,
           context: context,
-          initialDate: DateTime.now(),
+          initialDate: selectedDate,
           firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(Duration(days: 365)),
+          lastDate: DateTime.now().add(const Duration(days: 365)),
         ) ??
         selectedDate;
 

@@ -19,4 +19,5 @@ class AppLightStyles {
       fontSize: 14, fontWeight: FontWeight.normal, color: ColorsManager.black);
   static TextStyle? taskDate = GoogleFonts.roboto(
       fontSize: 12, fontWeight: FontWeight.normal, color: ColorsManager.black);
+// static TextStyle headerText = GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.w700, color: ColorsManager.white);
 }

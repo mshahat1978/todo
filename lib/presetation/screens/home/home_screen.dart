@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/settings_tab/tasks_tab.dart';
 import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/tasks_tab/tasks_tab.dart';
 import 'package:todo_app_c12_online_sun/presetation/screens/home/task_bottom_sheet/task_bottom_sheet.dart';
@@ -14,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   List<Widget> tabs = [
-    TasksTab(),
+    const TasksTab(),
     SettingsTab(),
   ];
 
@@ -38,9 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: currentIndex,
             onTap: onTapped,
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Tasks'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), label: 'Settings'),
+                icon: Icon(Icons.list),
+                label: 'Tasks',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
             ]),
       );
 
@@ -50,18 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildFab() => FloatingActionButton(
-        onPressed: () {
-          showTaskBottomSheet();
-        },
+        onPressed: () => TaskBottomSheet.show(context),
         child: const Icon(
           Icons.add,
         ),
       );
-
-  void showTaskBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => TaskBottomSheet.show(),
-    );
-  }
 }

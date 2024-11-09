@@ -7,16 +7,17 @@ class AppTheme {
   static ThemeData light = ThemeData(
       useMaterial3: false,
       primaryColor: Colors.blue,
+      scaffoldBackgroundColor: ColorsManager.scaffoldBg,
       colorScheme: ColorScheme.fromSeed(
-          seedColor: ColorsManager.blue,
-          primary: ColorsManager.blue,
-          onPrimary: ColorsManager.white),
+        seedColor: ColorsManager.blue,
+        primary: ColorsManager.blue,
+        onPrimary: ColorsManager.white,
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: ColorsManager.blue,
-        //toolbarHeight: 157,
+        elevation: 0,
         titleTextStyle: AppLightStyles.appBarTextStyle,
       ),
-      scaffoldBackgroundColor: ColorsManager.scaffoldBg,
       bottomAppBarTheme: const BottomAppBarTheme(
         color: ColorsManager.white,
         shape: CircularNotchedRectangle(),
@@ -29,17 +30,22 @@ class AppTheme {
         unselectedItemColor: ColorsManager.grey,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: ColorsManager.blue,
-          iconSize: 33,
-          shape: StadiumBorder(
-              side: BorderSide(color: ColorsManager.white, width: 4))),
+        backgroundColor: ColorsManager.blue,
+        iconSize: 33,
+        shape: StadiumBorder(
+          side: BorderSide(
+            color: ColorsManager.white,
+            width: 4,
+          ),
+        ),
+      ),
       bottomSheetTheme: const BottomSheetThemeData(
-        shape: RoundedRectangleBorder(
+          backgroundColor: ColorsManager.white,
+          elevation: 20,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
-        )),
-        backgroundColor: ColorsManager.white,
-        elevation: 18,
-      ));
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          )));
 }
