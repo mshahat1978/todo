@@ -42,6 +42,8 @@ class TasksTabState extends State<TasksTab> {
             itemBuilder: (context, index) {
               return TaskItem(
                 todo: todosList[index],
+                onDeletedTask: getToDoFromFirestore,
+                onEditTask: getToDoFromFirestore,
               );
             },
             itemCount: todosList.length,

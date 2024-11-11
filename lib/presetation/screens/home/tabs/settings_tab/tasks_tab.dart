@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
 
 class SettingsTab extends StatefulWidget {
-  SettingsTab({super.key});
+  const SettingsTab({super.key});
 
   @override
   State<SettingsTab> createState() => _SettingsTabState();
@@ -19,16 +19,16 @@ class _SettingsTabState extends State<SettingsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             'Theme',
             style: TextStyle(fontSize: 16, color: Colors.black),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Container(
             height: 48,
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 color: ColorsManager.white,
                 //borderRadius: BorderRadius.circular(8),
@@ -38,7 +38,8 @@ class _SettingsTabState extends State<SettingsTab> {
               children: [
                 Text(
                   selectedTheme,
-                  style: TextStyle(fontSize: 16, color: ColorsManager.blue),
+                  style:
+                      const TextStyle(fontSize: 16, color: ColorsManager.blue),
                 ),
                 DropdownButton<String>(
                   underline: Container(
@@ -58,16 +59,16 @@ class _SettingsTabState extends State<SettingsTab> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
-          Text('Language'),
-          SizedBox(
+          const Text('Language'),
+          const SizedBox(
             height: 8,
           ),
           Container(
             height: 48,
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 color: ColorsManager.white,
                 //borderRadius: BorderRadius.circular(8),
@@ -77,7 +78,8 @@ class _SettingsTabState extends State<SettingsTab> {
               children: [
                 Text(
                   selectedLang,
-                  style: TextStyle(fontSize: 16, color: ColorsManager.blue),
+                  style:
+                      const TextStyle(fontSize: 16, color: ColorsManager.blue),
                 ),
                 DropdownButton<String>(
                   elevation: 0,

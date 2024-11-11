@@ -7,9 +7,16 @@ import 'package:todo_app_c12_online_sun/core/utils/date_utils.dart';
 import 'package:todo_app_c12_online_sun/database/todo_dm.dart';
 
 class TaskItem extends StatelessWidget {
-  TaskItem({super.key, required this.todo});
+  TaskItem({
+    super.key,
+    required this.todo,
+    required this.onDeletedTask,
+    required this.onEditTask,
+  });
 
   TodoDM todo;
+  Function onDeletedTask;
+  Function onEditTask;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +32,7 @@ class TaskItem extends StatelessWidget {
             flex: 2,
             onPressed: (context) {
               deleteTodoFromFireStore();
+              onDeletedTask();
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -38,7 +46,7 @@ class TaskItem extends StatelessWidget {
             // An action can be bigger than the others.
             flex: 2,
             onPressed: (context) {
-              print('Clicked');
+              onEditTask();
             },
             backgroundColor: ColorsManager.blue,
             foregroundColor: Colors.white,
@@ -109,8 +117,5 @@ class TaskItem extends StatelessWidget {
         FirebaseFirestore.instance.collection(TodoDM.collectionName);
     DocumentReference docRef = collectionRef.doc(todo.id);
     await docRef.delete();
-    print('Delete Clicked');
-    // GlobalKey<TasksTabState> taskKey=GlobalKey();
-    // taskKey.currentState?.getToDoFromFirestore();
   }
 }
