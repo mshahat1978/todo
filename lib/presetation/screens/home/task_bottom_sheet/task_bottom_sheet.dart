@@ -5,7 +5,7 @@ import 'package:todo_app_c12_online_sun/core/utils/date_utils.dart';
 import 'package:todo_app_c12_online_sun/database/todo_dm.dart';
 
 class TaskBottomSheet extends StatefulWidget {
-  TaskBottomSheet({super.key});
+  const TaskBottomSheet({super.key});
 
   @override
   State<TaskBottomSheet> createState() => _TaskBottomSheetState();
@@ -17,7 +17,7 @@ class TaskBottomSheet extends StatefulWidget {
       isScrollControlled: true,
       builder: (context) => Padding(
         padding: MediaQuery.of(context).viewInsets,
-        child: TaskBottomSheet(),
+        child: const TaskBottomSheet(),
       ),
     );
   }
@@ -113,7 +113,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
 
   void addTaskToFireStore() {
     if (!formKey.currentState!.validate()) return;
-    var db = FirebaseFirestore.instance;
     DocumentReference newDoc =
         FirebaseFirestore.instance.collection(TodoDM.collectionName).doc();
 
@@ -125,24 +124,26 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
             second: 0, millisecond: 0, minute: 0, microsecond: 0, hour: 0),
         isDone: false);
 
-    newDoc.set(todo.toFireStore()).then(
-      (_) {
-        print('Success on then ');
-        Navigator.pop(context);
-      },
-    ).onError(
-      (error, stackTrace) {
-        print('Error occurred $error');
-      },
-    ).timeout(
-      Duration(milliseconds: 500),
-      onTimeout: () {
-        if (mounted) {
-          print('on timeout ');
-          Navigator.pop(context);
-        }
-      },
-    );
+    newDoc
+        .set(todo.toFireStore())
+        .then(
+          (_) {
+            if (mounted) {
+              Navigator.pop(context);
+            }
+          },
+        )
+        .onError(
+          (error, stackTrace) {},
+        )
+        .timeout(
+          const Duration(milliseconds: 500),
+          onTimeout: () {
+            if (mounted) {
+              Navigator.pop(context);
+            }
+          },
+        );
   }
 }
 // Provider
