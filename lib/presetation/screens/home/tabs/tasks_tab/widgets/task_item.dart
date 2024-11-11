@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app_c12_online_sun/core/utils/app_styles.dart';
 import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
 import 'package:todo_app_c12_online_sun/core/utils/date_utils.dart';
+import 'package:todo_app_c12_online_sun/database/todo_dm.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key});
+  TaskItem({super.key, required this.todo});
+
+  TodoDM todo;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class TaskItem extends StatelessWidget {
             // An action can be bigger than the others.
             flex: 2,
             onPressed: (context) {
-              print('Clicked');
+              deleteTodoFromFireStore();
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -41,36 +45,8 @@ class TaskItem extends StatelessWidget {
             icon: Icons.edit,
             label: 'Edit',
             autoClose: true,
-            // borderRadius: BorderRadius.only(
-            //   bottomLeft: Radius.circular(15),
-            //   topLeft: Radius.circular(15)
-            // ),
           ),
         ]),
-        // endActionPane: ActionPane(
-        //     motion: DrawerMotion(),
-        //     children: [
-        //
-        //       SlidableAction(
-        //         // An action can be bigger than the others.
-        //         flex: 2,
-        //         onPressed: (context) {
-        //           print('Clicked');
-        //         },
-        //         backgroundColor: ColorsManager.blue,
-        //         foregroundColor: Colors.white,
-        //         icon: Icons.edit,
-        //         label: 'Edit',
-        //         autoClose: true,
-        //         // borderRadius: BorderRadius.only(
-        //         //   bottomLeft: Radius.circular(15),
-        //         //   topLeft: Radius.circular(15)
-        //         // ),
-        //
-        //
-        //       ),
-        //     ]),
-
         child: Container(
           // margin: EdgeInsets.all(8),
           padding: const EdgeInsets.all(10),
@@ -93,11 +69,11 @@ class TaskItem extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Play basket ball', style: AppLightStyles.tasksTitle),
+                  Text(todo.title, style: AppLightStyles.tasksTitle),
                   const SizedBox(
                     height: 4,
                   ),
-                  Text('Play basket ball', style: AppLightStyles.taskDesc),
+                  Text(todo.description, style: AppLightStyles.taskDesc),
                   const SizedBox(
                     height: 4,
                   ),
@@ -109,21 +85,32 @@ class TaskItem extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: 30,
-                  ))
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(
+                  Icons.check,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void deleteTodoFromFireStore() async {
+    CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection(TodoDM.collectionName);
+    DocumentReference docRef = collectionRef.doc(todo.id);
+    await docRef.delete();
+    print('Delete Clicked');
+    // GlobalKey<TasksTabState> taskKey=GlobalKey();
+    // taskKey.currentState?.getToDoFromFirestore();
   }
 }

@@ -12,10 +12,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
-  List<Widget> tabs = [
-    const TasksTab(),
-    SettingsTab(),
-  ];
+  GlobalKey<TasksTabState> taskKey = GlobalKey();
+  List<Widget> tabs = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tabs = [
+      TasksTab(
+        key: taskKey,
+      ),
+      SettingsTab(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildFab() => FloatingActionButton(
-        onPressed: () => TaskBottomSheet.show(context),
+        onPressed: () async {
+          await TaskBottomSheet.show(context);
+          taskKey.currentState?.getToDoFromFirestore();
+        },
         child: const Icon(
           Icons.add,
         ),
