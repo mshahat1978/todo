@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
@@ -9,11 +10,18 @@ class TasksTab extends StatefulWidget {
   const TasksTab({super.key});
 
   @override
-  State<TasksTab> createState() => _TasksTabState();
+  State<TasksTab> createState() => TasksTabState();
 }
 
-class _TasksTabState extends State<TasksTab> {
+class TasksTabState extends State<TasksTab> {
   DateTime calenderSelectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToDoFromFirestore();
+  }
 
   List<TodoDM> todosList = []; // empty
   @override
@@ -32,7 +40,9 @@ class _TasksTabState extends State<TasksTab> {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return TaskItem();
+              return TaskItem(
+                todo: todosList[index],
+              );
             },
             itemCount: todosList.length,
           ),
@@ -43,7 +53,10 @@ class _TasksTabState extends State<TasksTab> {
 
   Widget buildCalenderTimeLine() => EasyDateTimeLine(
         initialDate: DateTime.now(),
-        onDateChange: (selectedDate) {},
+        onDateChange: (selectedDate) {
+          calenderSelectedDate = selectedDate;
+          getToDoFromFirestore();
+        },
         headerProps: const EasyHeaderProps(
           monthStyle: TextStyle(
               color: ColorsManager.white,
@@ -107,4 +120,30 @@ class _TasksTabState extends State<TasksTab> {
           ),
         ),
       );
+
+  getToDoFromFirestore() async {
+    CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection(TodoDM.collectionName);
+    QuerySnapshot collectionSnap = await collectionRef.get();
+    List<QueryDocumentSnapshot> documentsSnapList = collectionSnap.docs;
+    // Doc =>  List of Doc in As Json
+    // use map to convert item item to my Map
+    todosList = documentsSnapList.map(
+      (docSnap) {
+        Map<String, dynamic> json = docSnap.data() as Map<String, dynamic>;
+        TodoDM todoDM = TodoDM.fromFireStore(json);
+        return todoDM;
+      },
+    ).toList();
+    // make filter by calenderSelectedDate
+    todosList = todosList
+        .where(
+          (todo) =>
+              todo.dateTime.year == calenderSelectedDate.year &&
+              todo.dateTime.month == calenderSelectedDate.month &&
+              todo.dateTime.day == calenderSelectedDate.day,
+        )
+        .toList();
+    setState(() {});
+  }
 }
