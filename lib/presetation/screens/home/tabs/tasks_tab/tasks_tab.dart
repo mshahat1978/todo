@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
-import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/tasks_tab/widgets/task_item.dart';
-
-import '../../../../../database/todo_dm.dart';
+import 'package:todo/core/utils/colors_manager.dart';
+import 'package:todo/database/todo_dm.dart';
+import 'package:todo/database/user_DM.dart';
+import 'package:todo/presetation/screens/home/tabs/tasks_tab/widgets/task_item.dart';
 
 class TasksTab extends StatefulWidget {
   const TasksTab({super.key});
@@ -124,9 +124,15 @@ class TasksTabState extends State<TasksTab> {
       );
 
   getToDoFromFirestore() async {
-    CollectionReference collectionRef =
-        FirebaseFirestore.instance.collection(TodoDM.collectionName);
-    QuerySnapshot collectionSnap = await collectionRef.get();
+    CollectionReference todoCollection = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(TodoDM.collectionName);
+    QuerySnapshot collectionSnap = await todoCollection
+        .where('dateTime',
+            isEqualTo: calenderSelectedDate.copyWith(
+                second: 0, millisecond: 0, minute: 0, microsecond: 0, hour: 0))
+        .get();
     List<QueryDocumentSnapshot> documentsSnapList = collectionSnap.docs;
     // Doc =>  List of Doc in As Json
     // use map to convert item item to my Map
@@ -137,15 +143,18 @@ class TasksTabState extends State<TasksTab> {
         return todoDM;
       },
     ).toList();
-    // make filter by calenderSelectedDate
-    todosList = todosList
-        .where(
-          (todo) =>
-              todo.dateTime.year == calenderSelectedDate.year &&
-              todo.dateTime.month == calenderSelectedDate.month &&
-              todo.dateTime.day == calenderSelectedDate.day,
-        )
-        .toList();
+
     setState(() {});
   }
 }
+
+// make filter by calenderSelectedDate
+// This We use Befaure but now we filter data from db direct
+// todosList = todosList
+//     .where(
+//       (todo) =>
+//           todo.dateTime.year == calenderSelectedDate.year &&
+//           todo.dateTime.month == calenderSelectedDate.month &&
+//           todo.dateTime.day == calenderSelectedDate.day,
+//     )
+//     .toList();

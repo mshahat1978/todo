@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app_c12_online_sun/core/utils/app_styles.dart';
-import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
-import 'package:todo_app_c12_online_sun/core/utils/date_utils.dart';
-import 'package:todo_app_c12_online_sun/database/todo_dm.dart';
+import 'package:todo/core/utils/app_styles.dart';
+import 'package:todo/core/utils/colors_manager.dart';
+import 'package:todo/core/utils/date_utils.dart';
+import 'package:todo/database/todo_dm.dart';
+import 'package:todo/database/user_DM.dart';
 
 class TaskItem extends StatelessWidget {
   TaskItem({
@@ -113,9 +114,11 @@ class TaskItem extends StatelessWidget {
   }
 
   void deleteTodoFromFireStore() async {
-    CollectionReference collectionRef =
-        FirebaseFirestore.instance.collection(TodoDM.collectionName);
-    DocumentReference docRef = collectionRef.doc(todo.id);
+    CollectionReference todoCollection = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(TodoDM.collectionName);
+    DocumentReference docRef = todoCollection.doc(todo.id);
     await docRef.delete();
   }
 }

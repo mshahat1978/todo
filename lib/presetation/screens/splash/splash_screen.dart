@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:todo_app_c12_online_sun/core/utils/assets_manager.dart';
-import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
-import 'package:todo_app_c12_online_sun/core/utils/routes_manager.dart';
+import 'package:todo/core/utils/assets_manager.dart';
+import 'package:todo/core/utils/colors_manager.dart';
+import 'package:todo/core/utils/routes_manager.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 3),
       () {
-        Navigator.pushReplacementNamed(context, RoutesManager.homeRoute);
+        Navigator.pushReplacementNamed(context, RoutesManager.home);
       },
     );
   }
