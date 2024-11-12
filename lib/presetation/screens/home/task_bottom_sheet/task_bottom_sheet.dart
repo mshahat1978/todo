@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app_c12_online_sun/core/utils/app_styles.dart';
-import 'package:todo_app_c12_online_sun/core/utils/date_utils.dart';
-import 'package:todo_app_c12_online_sun/database/todo_dm.dart';
+import 'package:todo/core/utils/app_styles.dart';
+import 'package:todo/core/utils/date_utils.dart';
+import 'package:todo/database/todo_dm.dart';
+import 'package:todo/database/user_DM.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   const TaskBottomSheet({super.key});
@@ -85,7 +86,8 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                   showTaskDatePicker();
                 },
                 child: Text(
-                  selectedDate.myDateformat(), //  selectedDate.toFormattedDate,
+                  selectedDate.toFormattedDate,
+                  //  selectedDate.toFormattedDate,
                   textAlign: TextAlign.center,
                   style: AppLightStyles.dateStyle,
                 )),
@@ -113,8 +115,12 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
 
   void addTaskToFireStore() {
     if (!formKey.currentState!.validate()) return;
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection(UserDM.collectionName)
+        .doc(UserDM.currentUser!.id)
+        .collection(TodoDM.collectionName);
     DocumentReference newDoc =
-        FirebaseFirestore.instance.collection(TodoDM.collectionName).doc();
+        collectionReference.doc(); // create new doc and generate it
 
     TodoDM todo = TodoDM(
         id: newDoc.id,
