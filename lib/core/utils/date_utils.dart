@@ -1,19 +1,24 @@
+import 'package:intl/intl.dart';
 
+extension DateEx on DateTime {
+  //String get toFormattedDate => '$day / $month / $year';
+  String get toFormattedDate {
+    DateFormat formatter = DateFormat('dd / MM / yyyy');
+    return formatter.format(this);
+  }
 
-// String toDateFormatted(DateTime date){
-//   DateFormat pattern = DateFormat('dd / MM / yyyy') ;
-//   return pattern.format(date);
-// }
+  // String get dayName {
+  //   List<String> days = ['MON', 'TUE', 'WED', 'THS', 'FRI', 'SAT', 'SUN'];
+  //   return days[weekday - 1];
+  // }
 
-/// toFormattedDate : Name of get method
-extension DateFormat on DateTime {
-  String get toFormattedDate => ' $day / $month / $year';
+  String get getDayName {
+    DateFormat formatter = DateFormat('E'); // view day name
+    return formatter.format(this);
+  }
 }
-// Make extension method
-///  DateFormat2 : Name of extension
-/// myformat() : Name of method
-///  if i but   get  no need  ()
-///
-extension DateFormat2 on DateTime {
-  String myDateformat() => '$day - $month - $year';
+
+String getDayName(DateTime date) {
+  DateFormat formatter = DateFormat('E'); // view day name
+  return formatter.format(date); //
 }

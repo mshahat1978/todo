@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_c12_online_sun/core/utils/colors_manager.dart';
+import 'package:todo/core/utils/colors_manager.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});

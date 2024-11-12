@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/settings_tab/tasks_tab.dart';
-import 'package:todo_app_c12_online_sun/presetation/screens/home/tabs/tasks_tab/tasks_tab.dart';
-import 'package:todo_app_c12_online_sun/presetation/screens/home/task_bottom_sheet/task_bottom_sheet.dart';
+import 'package:todo/presetation/screens/home/tabs/settings_tab/settings_tab.dart';
+import 'package:todo/presetation/screens/home/tabs/tasks_tab/tasks_tab.dart';
+import 'package:todo/presetation/screens/home/task_bottom_sheet/task_bottom_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       TasksTab(
         key: taskKey,
       ),
-      SettingsTab(),
+      const SettingsTab(),
     ];
   }
 

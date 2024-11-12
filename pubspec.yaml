@@ -1,4 +1,4 @@
-name: todo_app_c12_online_sun
+name: todo
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,6 +41,9 @@ dependencies:
   easy_date_timeline: ^1.1.3
   firebase_core: ^3.6.0
   cloud_firestore: ^5.4.4
+  flutter_svg: ^2.0.14
+  flutter_screenutil: ^5.9.3
+  firebase_auth: ^5.3.2
 
 dev_dependencies:
   flutter_test:
