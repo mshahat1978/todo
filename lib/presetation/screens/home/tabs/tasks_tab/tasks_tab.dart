@@ -42,8 +42,8 @@ class TasksTabState extends State<TasksTab> {
             itemBuilder: (context, index) {
               return TaskItem(
                 todo: todosList[index],
+                taskTabStateKey: widget.key,
                 onDeletedTask: getToDoFromFirestore,
-                onEditTask: getToDoFromFirestore,
               );
             },
             itemCount: todosList.length,
@@ -124,6 +124,7 @@ class TasksTabState extends State<TasksTab> {
       );
 
   getToDoFromFirestore() async {
+    print('in getToDoFromFirestore');
     CollectionReference todoCollection = FirebaseFirestore.instance
         .collection(UserDM.collectionName)
         .doc(UserDM.currentUser!.id)
@@ -147,14 +148,3 @@ class TasksTabState extends State<TasksTab> {
     setState(() {});
   }
 }
-
-// make filter by calenderSelectedDate
-// This We use Befaure but now we filter data from db direct
-// todosList = todosList
-//     .where(
-//       (todo) =>
-//           todo.dateTime.year == calenderSelectedDate.year &&
-//           todo.dateTime.month == calenderSelectedDate.month &&
-//           todo.dateTime.day == calenderSelectedDate.day,
-//     )
-//     .toList();

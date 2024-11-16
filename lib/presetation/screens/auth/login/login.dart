@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
 
   late TextEditingController passwordController;
 
-  GlobalKey<FormState> formKey = GlobalKey();
+  GlobalKey<FormState> formLogKey = GlobalKey();
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
         padding: REdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Form(
-            key: formKey,
+            key: formLogKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -161,7 +161,7 @@ class _LoginState extends State<Login> {
   void signIn() async {
     // step1 -> check if form valid ?
     // step2-> create user
-    if (formKey.currentState?.validate() == false) return;
+    if (formLogKey.currentState?.validate() == false) return;
 
     // create user
     try {
