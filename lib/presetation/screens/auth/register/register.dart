@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
   // TextEditingController passwordController = TextEditingController();
   // TextEditingController rePasswordController = TextEditingController();
 
-  GlobalKey<FormState> formKey = GlobalKey();
+  GlobalKey<FormState> formRegKey = GlobalKey();
 
   @override
   void initState() {
@@ -64,7 +64,7 @@ class _RegisterState extends State<Register> {
         padding: REdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Form(
-            key: formKey,
+            key: formRegKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -221,7 +221,7 @@ class _RegisterState extends State<Register> {
   void signUp() async {
     // step1 -> check if form valid ?
     // step2-> create user
-    if (formKey.currentState?.validate() == false) return;
+    if (formRegKey.currentState?.validate() == false) return;
 
     // create user
 

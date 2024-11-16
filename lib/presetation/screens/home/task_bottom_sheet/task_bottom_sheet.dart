@@ -28,7 +28,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   DateTime selectedDate = DateTime.now();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formBtmKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       padding: const EdgeInsets.all(15),
       height: MediaQuery.of(context).size.height * 0.55,
       child: Form(
-        key: formKey,
+        key: formBtmKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -87,13 +87,15 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
                 },
                 child: Text(
                   selectedDate.toFormattedDate,
-                  //  selectedDate.toFormattedDate,
                   textAlign: TextAlign.center,
                   style: AppLightStyles.dateStyle,
                 )),
             const Spacer(),
             ElevatedButton(
-                onPressed: addTaskToFireStore, child: const Text('Add task'))
+                onPressed: () {
+                  addTaskToFireStore();
+                },
+                child: const Text('Add task'))
           ],
         ),
       ),
@@ -102,7 +104,6 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
 
   void showTaskDatePicker() async {
     selectedDate = await showDatePicker(
-          //selectableDayPredicate: (date) => date. != 20 && date.day != 21,
           context: context,
           initialDate: selectedDate,
           firstDate: DateTime.now(),
@@ -114,7 +115,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   }
 
   void addTaskToFireStore() {
-    if (!formKey.currentState!.validate()) return;
+    if (!formBtmKey.currentState!.validate()) return;
     CollectionReference collectionReference = FirebaseFirestore.instance
         .collection(UserDM.collectionName)
         .doc(UserDM.currentUser!.id)
@@ -146,7 +147,7 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
           const Duration(milliseconds: 500),
           onTimeout: () {
             if (mounted) {
-              Navigator.pop(context);
+              //Navigator.pop(context);
             }
           },
         );
